@@ -61,7 +61,20 @@ func NewUser(w http.ResponseWriter, r *http.Request) {
 }
 
 func DeleteUser(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "Delete endpoint")
+	db, err = gorm.Open("sqlite3", "test.db")
+	if err != nil {
+		panic("Could not connect to DB")
+	}
+	defer db.Close()
+
+	vars := mux.Vars(r)
+	name := vars["name"]
+
+	var user User
+	db.Where("name = ?", name).Find(&user)
+	db.Delete(&user)
+
+	fmt.Fprintf(w, "User %+s has been successfully deleted", name)
 }
 
 func UpdateUser(w http.ResponseWriter, r *http.Request) {
