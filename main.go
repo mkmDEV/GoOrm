@@ -14,8 +14,10 @@ func helloWorld(w http.ResponseWriter, r *http.Request) {
 func handleRequests() {
 	router := mux.NewRouter().StrictSlash(true)
 	router.HandleFunc("/", helloWorld).Methods("GET")
-	router.HandleFunc("/users", allUsers).Methods("GET")
-	router.HandleFunc("/user/{name}/{email}", newUser).Methods("POST")
+	router.HandleFunc("/users", AllUsers).Methods("GET")
+	router.HandleFunc("/user/{name}/{email}", NewUser).Methods("POST")
+	router.HandleFunc("/user/{name}", DeleteUser).Methods("DELETE")
+	router.HandleFunc("/user/{name}/{email}", UpdateUser).Methods("PUT")
 	log.Fatal(http.ListenAndServe(":8081", router))
 }
 

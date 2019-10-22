@@ -5,18 +5,18 @@ import (
 	"net/http"
 )
 
-func allUsers(w http.ResponseWriter, r *http.Request) {
+func AllUsers(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "All Users endpoint hit")
 }
 
-func newUser(w http.ResponseWriter, r *http.Request) {
+func NewUser(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "New user endpoint hit")
 }
 
-func deleteUser(w http.ResponseWriter, r *http.Request) {
+func DeleteUser(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "Delete endpoint")
 }
 
-func updateUser(w http.ResponseWriter, r *http.Request) {
+func UpdateUser(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "Update")
 }
