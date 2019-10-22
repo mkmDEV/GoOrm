@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/sqlite"
@@ -28,7 +29,15 @@ func InitialMigration() {
 }
 
 func AllUsers(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "All Users endpoint hit")
+	db, err = gorm.Open("sqlite3", "test.db")
+	if err != nil {
+		panic("Could not connect to DB")
+	}
+	defer db.Close()
+
+	var users []User
+	db.Find(&users)
+	json.NewEncoder(w).Encode(users)
 }
 
 func NewUser(w http.ResponseWriter, r *http.Request) {
