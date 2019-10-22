@@ -12,9 +12,11 @@ func helloWorld(w http.ResponseWriter, r *http.Request) {
 }
 
 func handleRequests() {
-	myRouter := mux.NewRouter().StrictSlash(true)
-	myRouter.HandleFunc("/", helloWorld).Methods("GET")
-	log.Fatal(http.ListenAndServe(":8081", myRouter))
+	router := mux.NewRouter().StrictSlash(true)
+	router.HandleFunc("/", helloWorld).Methods("GET")
+	router.HandleFunc("/users", allUsers).Methods("GET")
+	router.HandleFunc("/user/{name}/{email}", newUser).Methods("POST")
+	log.Fatal(http.ListenAndServe(":8081", router))
 }
 
 func main() {
