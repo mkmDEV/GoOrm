@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/gorilla/mux"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/sqlite"
 	"net/http"
@@ -41,7 +42,22 @@ func AllUsers(w http.ResponseWriter, r *http.Request) {
 }
 
 func NewUser(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "New user endpoint hit")
+	db, err = gorm.Open("sqlite3", "test.db")
+	if err != nil {
+		panic("Could not connect to DB")
+	}
+	defer db.Close()
+
+	vars := mux.Vars(r)
+	name := vars["name"]
+	email := vars["email"]
+
+	db.Create(&User{
+		Name:  name,
+		Email: email,
+	})
+
+	fmt.Fprintf(w, "New user %+s successfully created", name)
 }
 
 func DeleteUser(w http.ResponseWriter, r *http.Request) {
